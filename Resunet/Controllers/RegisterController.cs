@@ -27,6 +27,16 @@ namespace Resunet.Controllers
 		{
             if (ModelState.IsValid)
             {
+                var errorModel = await authBL.ValidateEmail(model.Email ?? "");
+                if (errorModel != null)
+                {
+                    ModelState.TryAddModelError("Email", errorModel.ErrorMessage!);
+                }
+            }
+
+
+            if (ModelState.IsValid)
+            {
 				await authBL.CreateUser(AuthMapper.RegisterViewModelToUserModel(model));
 				return Redirect("/");
             }

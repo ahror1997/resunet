@@ -1,5 +1,7 @@
 ﻿using Resunet.DAL;
 using Resunet.DAL.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Resunet.BL.Auth
 {
@@ -39,6 +41,17 @@ namespace Resunet.BL.Auth
 				return user.UserId ?? 0;
             }
 			return 0;
+        }
+
+		public async Task<ValidationResult?> ValidateEmail(string email)
+		{
+			var user = await authDAL.GetUser(email);
+            if (user.UserId != null)
+            {
+				return new ValidationResult("Email уже существует");
+            }
+
+			return null;
         }
     }
 }
