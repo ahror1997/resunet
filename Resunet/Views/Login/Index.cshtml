@@ -1,0 +1,19 @@
+﻿@model Resunet.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div>
+    <form action="/login" method="post">
+        <p>
+            <label>Email</label>
+            <input name="Email" value="@Model.Email" />
+        </p>
+        <p>
+            <label>Password</label>
+            <input name="Password" type="password" />
+        </p>
+        <button>Login</button>
+    </form>
+</div>

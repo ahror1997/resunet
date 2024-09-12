@@ -7,7 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IAuthBL, AuthBL>();
+builder.Services.AddSingleton<IEncrypt, Encrypt>();
 builder.Services.AddSingleton<IAuthDAL, AuthDAL>();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddMvc().AddSessionStateTempDataProvider();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -22,6 +30,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();

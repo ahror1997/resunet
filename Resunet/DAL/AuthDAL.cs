@@ -10,7 +10,7 @@ namespace Resunet.DAL
         {
             using (var connection = new NpgsqlConnection(DbHelper.ConnectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
 
                 return await connection.QueryFirstOrDefaultAsync<UserModel>(@"
 					SELECT UserId, Email, Password, Salt, Status
@@ -23,7 +23,7 @@ namespace Resunet.DAL
         {
             using (var connection = new NpgsqlConnection(DbHelper.ConnectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
 
                 return await connection.QueryFirstOrDefaultAsync<UserModel>(@"
 					SELECT UserId, Email, Password, Salt, Status
@@ -36,12 +36,13 @@ namespace Resunet.DAL
         {
             using (var connection = new NpgsqlConnection(DbHelper.ConnectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 string sql = @"
 					INSERT INTO AppUser(Email, Password, Salt, Status)
-					VALUES(@Email, @Password, @Salt, @Status)";
+					VALUES(@Email, @Password, @Salt, @Status)
+                    RETURNING UserId";
 
-                return await connection.ExecuteAsync(sql, model);
+                return await connection.QuerySingleAsync<int>(sql, model);
             }
         }
     }
