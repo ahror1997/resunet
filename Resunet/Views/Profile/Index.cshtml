@@ -1,0 +1,19 @@
+﻿@model Resunet.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<div>
+    <form action="/profile" method="post" enctype="multipart/form-data">
+        <p>
+            <label>Имя профила</label>
+            <input type="text" name="ProfileName" value="@Model.ProfileName" />
+        </p>
+        <p>
+            <label>Файл</label>
+            <input type="file" name="file" />
+        </p>
+        <button>Авторизоваться</button>
+    </form>
+</div>
